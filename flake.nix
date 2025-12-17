@@ -10,7 +10,7 @@
 
       nixpkgsFor = forAllSystems (system: import nixpkgs {
         inherit system;
-        overlays = [];
+        overlays = [ ];
       });
     in
     {
@@ -28,6 +28,13 @@
               sqlboiler
               postgresql
             ];
+            env = {
+              "PGHOST" = "127.0.0.1";
+              "PGPORT" = "5432";
+              "PGUSER" = "postgres";
+              "PGPASSWORD" = "secret";
+              "PGDATABASE" = "sqlboiler_bug";
+            };
           };
         });
 
