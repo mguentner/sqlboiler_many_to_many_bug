@@ -542,7 +542,6 @@ func (tagL) LoadItems(ctx context.Context, e boil.ContextExecutor, singular bool
 					foreign.R = &itemR{}
 				}
 				foreign.R.Tags = append(foreign.R.Tags, local)
-				break
 			}
 		}
 	}

@@ -542,7 +542,6 @@ func (listL) LoadItems(ctx context.Context, e boil.ContextExecutor, singular boo
 					foreign.R = &itemR{}
 				}
 				foreign.R.Lists = append(foreign.R.Lists, local)
-				break
 			}
 		}
 	}

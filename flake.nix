@@ -2,21 +2,32 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
   };
-  outputs = { self, nixpkgs }:
+  outputs =
+    { self, nixpkgs }:
     let
-      supportedSystems = [ "x86_64-linux" "aarch64-linux" ];
+      supportedSystems = [
+        "x86_64-linux"
+        "aarch64-linux"
+      ];
 
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
 
-      nixpkgsFor = forAllSystems (system: import nixpkgs {
-        inherit system;
-        overlays = [ ];
-      });
+      nixpkgsFor = forAllSystems (
+        system:
+        import nixpkgs {
+          inherit system;
+          overlays = [ ];
+        }
+      );
     in
     {
-      devShells = forAllSystems (system:
+      devShells = forAllSystems (
+        system:
         let
           pkgs = nixpkgsFor.${system};
+          sqlboiler-fixed = pkgs.sqlboiler.overrideAttrs (oldAttrs: {
+            patches = [ ./sqlboiler.patch ];
+          });
         in
         {
           default = pkgs.mkShell {
@@ -25,7 +36,7 @@
               go
               gopls
               bashInteractive
-              sqlboiler
+              sqlboiler-fixed
               postgresql
             ];
             env = {
@@ -36,7 +47,8 @@
               "PGDATABASE" = "sqlboiler_bug";
             };
           };
-        });
+        }
+      );
 
     };
 }

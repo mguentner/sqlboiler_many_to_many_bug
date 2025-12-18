@@ -607,7 +607,6 @@ func (itemL) LoadTags(ctx context.Context, e boil.ContextExecutor, singular bool
 					foreign.R = &tagR{}
 				}
 				foreign.R.Items = append(foreign.R.Items, local)
-				break
 			}
 		}
 	}
@@ -737,7 +736,6 @@ func (itemL) LoadLists(ctx context.Context, e boil.ContextExecutor, singular boo
 					foreign.R = &listR{}
 				}
 				foreign.R.Items = append(foreign.R.Items, local)
-				break
 			}
 		}
 	}
